@@ -1,0 +1,18 @@
+Changes from version 1.1a to version 1.2
+==========================================
+	- Added support for SQL index functionality (PostgreSQL only)
+	- Pretty minor BUGFIX (works with this bug and without it ;-)
+
+Changes from version 1.1 to version 1.1a
+==========================================
+	- Patch for Dia v0.83 (contributed by Georges Khaznadar)
+
+Changes from version 1.0 to version 1.1
+==========================================
+	- Added option for MySQL and PostgreSQL support
+	- Added foreign key generation feature (PostgreSQL only)
+	- BUGFIX: always created "DROP TABLE" statements
+
+Version 1.0 - FIRST PUBLIC RELEASE
+==========================================
+	- Created SQL files sometimes didn't work with PostgreSQL

@@ -1,0 +1,6 @@
+TODO LIST FOR dia2sql.pl
+========================
+
+- convert UML associations between classes to PostgreSQL foreign key contraints
+  (reference must point to a valid index) and use this feature instead of the
+  "FK_" naming conventions feature...

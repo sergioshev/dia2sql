@@ -1,0 +1,60 @@
+dia2sql.pl v1.2 - Entity Relationship using Linux and Dia
+---------------------------------------------------------
+
+Copyright (c) 2001 by Alexander Troppmann
+All rights reserved.
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public Licence (GPL).
+
+This is a Perl script to convert a Dia diagram into a SQL statements. It
+requires XML::Parser 2.3 or greater installed. The XML::Parser module needs
+the expat library which is a XML 1.0 parser written in C. Install expat before
+fetching XML::Parser from CPAN using the following line at your shell prompt:
+
+   root@localhost:~ > perl -MCPAN -e 'install XML::Parser'
+
+This will automatically install XML::Parser for you.
+
+You can get the most recent version of dia2sql.pl from:
+http://www.karyopse.de/dia2sql/
+
+
+Documentation
+-------------
+
+This is just a small, simple Perl script - nothing magic to document :-)
+
+You can try to convert the example.dia file writing a new example.sql:
+
+   ./dia2sql.pl example.dia example.sql
+
+If no .sql file is specified dia2sql.pl will print the SQL statements generated
+from the Dia UML diagram to standard output stream...
+
+   ./dia2sql.pl example.dia > /tmp/example.sql
+
+IMPORTANT: Make sure you setup the right config (MySQL or PostgreSQL, DROP TABLE
+statements or not...) at top of the dia2sql.pl Perl script!
+
+
+Featurelist
+-----------
+
+Name, datatype, default value, foreign keys and index columns can be created from
+the Dia UML diagram. Note that some features are available with PostgreSQL only.
+In detail this means:
+
+- dia2sql.pl creates a table for each Dia UML class
+
+- all XML attributes of a Dia UML class will be converted to SQL statements:
+    "Name" = SQL column name,
+    "Type" = SQL datatype and also additional attributes,
+    "Visibility" = if set to "Protected" the attribute will be a primary key
+    "Visibility" = if set to "Private" the column will be marked as "indexed"
+    "Value" = if set a default value will be defined for this column
+
+
+Alexander Troppmann <talex@karyopse.de> - http://www.cocktaildreams.de
+
+dia2sql.pl v1.2, 20th March 2001

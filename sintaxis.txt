@@ -1,0 +1,60 @@
+# Sintaxis de los atributos y las tablas.
+
+- El nombre de la tabla se pone en el nombre de la clase.
+- La herencia se modela separando la tabla de sus superclases con '@'
+  (y separadas por @). Si a una tabla se le antepone un '*' indica que no se
+  deben heredar los constraints de claves extranjeras.
+- Las columnas se cargan como atributos.
+  El nombre del atributo corresponde al nombre de la columna.
+  El tipo del atributo corresponde al tipo de la columna.
+  El valor del atributo corresponde con el valor por default de la columna,
+  o un constraint de NOT NULL, CHECK, etc. Si hay varias cosas, se debe
+  comenzar con el valor por default (si existe) y luego los demás constraints.
+- Para incluir una columna en la clave primaria se debe cambiar la visibilidad
+  del atributo a 'Protected'.
+- Para inlcuir una clave extranjera se utiliza la siguiente sintaxis:
+
+  FK_ <nombre tabla> [ [#<cardinal>] #<columna destino> ] [_<nombre columna>]
+     [ @ <restricciones> ]
+
+   - El <nombre tabla> corresponde a la entrada REFERENCES de SQL.
+   - Cuando se declaran muchas columnas como claves extranjeras, las mismas
+     conforman una clave extranjera unica. Para evitar esto se puede usar el
+     <cardinal>. El cardinal permite multiples claves extranjeras compuestas
+     hacia una misma tabla. Debe ser un número. Si no se pone un cardinal,
+     se asume que todas las columnas que referencian a una misma tabla
+     corresponden a una única clave extranjera.
+   - <columna destino> es el nombre de la columna en la tabla a la cual se
+     referencia. Es obligatorio en claves compuestas, y se asume en forma
+     automática en claves simples.
+   - <nombre columna> es el nombre que llevará la columna en la tabla de origen
+     de la clave extranjera. Si no se especifica, llevará el nombre de la tabla
+     referenciada.
+   - Las <restricciones> corresponden a las restricciones de integridad. Se
+     permite no más de un update y no más de un delete. Tienen la siguiente
+     forma:
+       {u,d}{i,r,n,d,c}
+
+       u = ON UPDATE       i = NO ACTION
+       d = ON DELETE       r = RESTRICT
+                           n = SET NULL
+                           d = SET DEFAULT
+                           c = CASCADE
+
+     Ejemplo:
+
+       En esta tabla se declaran dos claves extranjeras a la tabla persona.
+       La clave primaria de la tabla persona está formada por 3 columnas:
+       tipodoc, sexo y nrodoc. En esta tabla del ejemplo por lo tanto se
+       deben declarar un total de 6 columnas para crear las dos referencias.
+       La primera referencia queda formada por p1TipoDoc, p1Sexo y p1NroDoc,
+       mientras que la segunda referencia queda formada por p2TipoDoc,
+       p2Sexo, y p2NroDoc. La primera lleva on delete restrict  on update
+       cascade y la segunda on delete cascade on update cascade.
+
+       FK_persona#1#tipodoc_p1TipoDoc@ucdr
+       FK_persona#1#sexo_p1Sexo
+       FK_persona#1#nrodoc_p1NroDoc
+       FK_persona#2#tipodoc_p2TipoDoc@ucdc
+       FK_persona#2#sexo_p2Sexo
+       FK_persona#2#nrodoc_p2NroDoc
